@@ -43,3 +43,7 @@ AS PERMISSIVE FOR SELECT
 TO supabase_auth_admin
 USING (true);
 
+GRANT SELECT ON users TO authenticated;
+GRANT SELECT ON roles TO authenticated;
+
+
