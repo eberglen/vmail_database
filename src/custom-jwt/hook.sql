@@ -9,10 +9,9 @@ DECLARE
     user_record RECORD;
 BEGIN
     -- Fetch the user's role and company_id from the users table
-    SELECT r.name AS role, u.company_id
+    SELECT u.role, u.company_id
     INTO user_record
     FROM public.users u
-    JOIN public.roles r ON u.role_id = r.id
     WHERE u.user_id = (event->>'user_id')::uuid;  -- Use user_id here
 
     claims := event->'claims';

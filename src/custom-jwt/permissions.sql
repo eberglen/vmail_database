@@ -7,9 +7,6 @@ GRANT EXECUTE ON FUNCTION public.custom_access_token_hook TO supabase_auth_admin
 -- Grant select permissions on the users table to the supabase_auth_admin role
 GRANT SELECT ON public.users TO supabase_auth_admin;
 
--- Grant select permissions on the roles table to the supabase_auth_admin role
-GRANT SELECT ON public.roles TO supabase_auth_admin;
-
 -- Grant select permissions on the companies table to the supabase_auth_admin role
 GRANT SELECT ON public.companies TO supabase_auth_admin;
 
@@ -18,9 +15,6 @@ REVOKE EXECUTE ON FUNCTION public.custom_access_token_hook FROM authenticated, a
 
 -- Revoke all permissions on the users table from all roles except supabase_auth_admin
 REVOKE ALL ON public.users FROM authenticated, anon, public;
-
--- Revoke all permissions on the roles table from all roles except supabase_auth_admin
-REVOKE ALL ON public.roles FROM authenticated, anon, public;
 
 -- Revoke all permissions on the companies table from all roles except supabase_auth_admin
 REVOKE ALL ON public.companies FROM authenticated, anon, public;
@@ -31,19 +25,13 @@ AS PERMISSIVE FOR SELECT
 TO supabase_auth_admin
 USING (true);
 
--- Create a policy to allow supabase_auth_admin to read from the roles table
-CREATE POLICY "Allow auth admin to read roles" ON public.roles
-AS PERMISSIVE FOR SELECT
-TO supabase_auth_admin
-USING (true);
-
 -- Create a policy to allow supabase_auth_admin to read from the companies table
 CREATE POLICY "Allow auth admin to read companies" ON public.companies
 AS PERMISSIVE FOR SELECT
 TO supabase_auth_admin
 USING (true);
 
-GRANT SELECT ON users TO authenticated;
-GRANT SELECT ON roles TO authenticated;
+-- GRANT SELECT ON users TO authenticated;
+-- GRANT SELECT ON roles TO authenticated;
 
 
