@@ -1,3 +1,5 @@
+-- Multiple select policy with the same type causes issues, only one of them gets run
+-- thus we combine the policy into one
 -- Enable Row-Level Security
 ALTER TABLE tokens ENABLE ROW LEVEL SECURITY;
 
