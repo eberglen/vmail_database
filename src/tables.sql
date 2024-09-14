@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS role_permissions CASCADE;
 create type public.app_permission as enum (
 'tokens.insert',
 'tokens.select',
-'tokens.update'
+'tokens.update',
+'tokens.delete'
 );
 
 create type public.app_role as enum ('admin', 'moderator');

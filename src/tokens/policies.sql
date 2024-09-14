@@ -38,3 +38,16 @@ USING (
   -- Check company_id
   (auth.jwt() ->> 'company_id')::UUID = company_id
 );
+
+DROP POLICY IF EXISTS "Allow authorized delete access with company id"
+ON tokens;
+CREATE POLICY "Allow authorized delete access with company id"
+ON public.tokens
+FOR DELETE
+USING (
+  -- Check authorization, ensure this is a boolean function
+  (SELECT authorize('tokens.delete'))
+  AND
+  -- Check if the company_id in JWT matches the row's company_id
+  (auth.jwt() ->> 'company_id')::UUID = company_id
+);

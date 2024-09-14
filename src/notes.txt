@@ -1,0 +1,6 @@
+You have a frontend app that a user signed in to
+You have a backend app that you need to verify user credentials on
+You call supabase.auth.session() on your frontend app to get the session
+You query your backend https://myapp.com/products/add with a POST containing the data from supabase.auth.session()
+On the backend you call supabase.auth.api.getUser(access_token) where access_token came from the POST request. (i.e. supabase.auth.session().access_token)
+You do a check against that user

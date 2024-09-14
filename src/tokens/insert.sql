@@ -3,4 +3,5 @@ values
    ('admin', 'tokens.insert'),
    ('admin', 'tokens.select'),
    ('admin', 'tokens.update'),
+   ('admin', 'tokens.delete'),
    ('moderator', 'tokens.select');
