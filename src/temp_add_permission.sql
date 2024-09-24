@@ -3,12 +3,12 @@
 -- 3. Update policies.sql of the table
 
 -- ADD ENUM
-ALTER TYPE public.app_permission ADD VALUE 'tokens.delete';
+ALTER TYPE public.app_permission ADD VALUE 'users.select';
 
 -- ADD ROLE - PERMISSION
 INSERT INTO public.role_permissions (role, permission)
 VALUES
-  ('admin', 'tokens.delete');
+  ('admin', 'users.select');
 
 -- CREATE POLICY
 DROP POLICY IF EXISTS "Allow authorized delete access with company id"

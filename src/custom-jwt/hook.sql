@@ -8,11 +8,11 @@ DECLARE
     claims jsonb;
     user_record RECORD;
 BEGIN
-    -- Fetch the user's role and company_id from the users table
-    SELECT u.role, u.company_id
+    -- Fetch the user's role and company_id from the profiles table
+    SELECT p.role, p.company_id
     INTO user_record
-    FROM public.users u
-    WHERE u.user_id = (event->>'user_id')::uuid;  -- Use user_id here
+    FROM public.profiles p
+    WHERE p.user_id = (event->>'user_id')::uuid;  -- Use user_id here
 
     claims := event->'claims';
 
