@@ -3,9 +3,7 @@ RETURNS TABLE (
     id INTEGER,
     auth_id UUID,
     display_name TEXT,
-    token_name TEXT,
-    token_email TEXT,
-    token_id UUID,
+    tokens JSONB,
     auth_email TEXT,
     company_id UUID
 )
@@ -15,15 +13,22 @@ AS $$
         p.id AS id,
         p.user_id AS auth_id,
         p.display_name,
-        t.name AS token_name,
-        t.email AS token_email,
-        t.id AS token_id,
+        -- Aggregate user token details into an array of JSON objects
+        COALESCE(
+            jsonb_agg(
+                jsonb_build_object(
+                    'token_name', t.name,
+                    'token_email', t.email,
+                    'token_id', t.id
+                )
+            ) FILTER (WHERE t.id IS NOT NULL), '[]'::jsonb
+        ) AS tokens,
         p.email AS auth_email,
         p.company_id
     FROM
         profiles p
     LEFT JOIN
-        user_tokens ut ON p.id = ut.user_id
+        user_tokens ut ON p.id = ut.profile_id
     LEFT JOIN
         tokens t ON ut.token_id = t.id
     WHERE
@@ -38,6 +43,8 @@ AS $$
             (auth.jwt() ->> 'user_role')::TEXT != 'admin'
             AND p.user_id = auth.uid()
         )
+    GROUP BY
+        p.id
     ORDER BY
         p.display_name DESC;
 $$;

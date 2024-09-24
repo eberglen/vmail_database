@@ -5,3 +5,5 @@ GRANT EXECUTE ON FUNCTION public.authorize to authenticated;
 GRANT EXECUTE ON FUNCTION public.upsert_token to authenticated;
 
 GRANT EXECUTE ON FUNCTION public.get_user_info to authenticated;
+
+GRANT EXECUTE ON FUNCTION public.sync_user_tokens to authenticated;

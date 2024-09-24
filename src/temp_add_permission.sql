@@ -3,7 +3,7 @@
 -- 3. Update policies.sql of the table
 
 -- ADD ENUM
-ALTER TYPE public.app_permission ADD VALUE 'users.select';
+ALTER TYPE public.app_permission ADD VALUE 'user_tokens.select';
 
 -- ADD ROLE - PERMISSION
 INSERT INTO public.role_permissions (role, permission)

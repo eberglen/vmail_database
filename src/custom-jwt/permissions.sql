@@ -19,17 +19,30 @@ REVOKE ALL ON public.profiles FROM authenticated, anon, public;
 -- Revoke all permissions on the companies table from all roles except supabase_auth_admin
 REVOKE ALL ON public.companies FROM authenticated, anon, public;
 
+REVOKE ALL ON public.roles FROM authenticated, anon, public;
+
+GRANT SELECT ON public.roles TO supabase_auth_admin;
+
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 -- Create a policy to allow supabase_auth_admin to read from the profiles table
 CREATE POLICY "Allow auth admin to read profiles" ON public.profiles
 AS PERMISSIVE FOR SELECT
 TO supabase_auth_admin
 USING (true);
 
+ALTER TABLE companies ENABLE ROW LEVEL SECURITY;
 -- Create a policy to allow supabase_auth_admin to read from the companies table
 CREATE POLICY "Allow auth admin to read companies" ON public.companies
 AS PERMISSIVE FOR SELECT
 TO supabase_auth_admin
 USING (true);
+
+ALTER TABLE roles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow auth admin to read roles" ON public.roles
+AS PERMISSIVE FOR SELECT
+TO supabase_auth_admin
+USING (true);
+
 
 
 
