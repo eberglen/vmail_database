@@ -1,3 +1,4 @@
+DROP FUNCTION get_user_info();
 CREATE OR REPLACE FUNCTION get_user_info()
 RETURNS TABLE (
     id INTEGER,
@@ -5,7 +6,9 @@ RETURNS TABLE (
     display_name TEXT,
     tokens JSONB,
     auth_email TEXT,
-    company_id UUID
+    company_id UUID,
+    role_id TEXT,
+    role_display_name TEXT
 )
 LANGUAGE sql
 AS $$
@@ -24,27 +27,31 @@ AS $$
             ) FILTER (WHERE t.id IS NOT NULL), '[]'::jsonb
         ) AS tokens,
         p.email AS auth_email,
-        p.company_id
+        p.company_id,
+        p.role_id,
+        MAX(r.display_name) as role_display_name
     FROM
         profiles p
     LEFT JOIN
         user_tokens ut ON p.id = ut.profile_id
     LEFT JOIN
         tokens t ON ut.token_id = t.id
+    LEFT JOIN
+        roles r ON p.role_id = r.id
     WHERE
         -- If the user is an admin, show all users in the same company
         (
-            (auth.jwt() ->> 'user_role')::TEXT = 'admin'
+            SELECT authorize('profiles.select.company')
             AND p.company_id = (auth.jwt() ->> 'company_id')::UUID
         )
-        OR
-        -- If the user is not an admin, show only their own user data
-        (
-            (auth.jwt() ->> 'user_role')::TEXT != 'admin'
-            AND p.user_id = auth.uid()
-        )
+--         OR
+--         -- If the user is not an admin, show only their own user data
+--         (
+--             (auth.jwt() ->> 'user_role')::TEXT != 'admin'
+--             AND p.user_id = auth.uid()
+--         )
     GROUP BY
         p.id
     ORDER BY
-        p.display_name DESC;
+        p.id ASC;
 $$;
