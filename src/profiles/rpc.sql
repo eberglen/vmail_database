@@ -6,7 +6,6 @@ RETURNS TABLE (
     display_name TEXT,
     tokens JSONB,
     auth_email TEXT,
-    company_id UUID,
     role_id TEXT,
     role_display_name TEXT
 )
@@ -27,7 +26,6 @@ AS $$
             ) FILTER (WHERE t.id IS NOT NULL), '[]'::jsonb
         ) AS tokens,
         p.email AS auth_email,
-        p.company_id,
         p.role_id,
         MAX(r.display_name) as role_display_name
     FROM

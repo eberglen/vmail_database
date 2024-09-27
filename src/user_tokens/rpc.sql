@@ -29,3 +29,35 @@ EXCEPTION
         RAISE;  -- Re-raise the error to inform the caller
 END;
 $$ LANGUAGE plpgsql;
+
+DROP FUNCTION get_user_tokens();
+CREATE OR REPLACE FUNCTION get_user_tokens()
+RETURNS TABLE (
+    value UUID,
+    label TEXT
+)
+LANGUAGE sql
+SECURITY DEFINER
+AS $$
+    SELECT
+        t.id as value,
+        t.name as label
+    FROM
+        tokens t
+    LEFT JOIN
+        user_tokens ut ON ut.token_id = t.id
+    WHERE
+        -- If the user is an admin, show all users in the same company
+        (
+            (SELECT authorize('user_tokens.select.company'))
+            AND (auth.jwt() ->> 'company_id')::UUID = t.company_id
+        )
+        OR
+        -- If the user is not an admin, show only their own user data
+        (
+            (SELECT authorize('user_tokens.select.own'))
+            AND (auth.jwt() ->> 'profile_id')::INTEGER = ut.profile_id
+        )
+    GROUP BY t.id;
+$$;
+

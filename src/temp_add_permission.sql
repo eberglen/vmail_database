@@ -3,12 +3,12 @@
 -- 3. Update policies.sql of the table
 
 -- ADD ENUM
-ALTER TYPE public.app_permission ADD VALUE 'roles.select.company';
+ALTER TYPE public.app_permission ADD VALUE 'profiles.update.company';
 
 -- ADD ROLE - PERMISSION
-INSERT INTO public.role_permissions (role, permission)
+INSERT INTO public.role_permissions (role_id, permission)
 VALUES
-  ('admin', 'users.select');
+  ((SELECT id FROM roles WHERE role_name = 'moderator'), 'user_tokens.select.own');
 
 -- CREATE POLICY
 DROP POLICY IF EXISTS "Allow authorized delete access with company id"

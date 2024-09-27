@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS tokens CASCADE;
 DROP TABLE IF EXISTS profiles CASCADE;
 DROP TABLE IF EXISTS companies CASCADE;
 DROP TABLE IF EXISTS role_permissions CASCADE;
-DROP TABLE IF EXISTS roles CASCADE; -- Updated to drop the roles table
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS contacts CASCADE;
 
 -- Custom types
 CREATE TYPE public.app_permission AS ENUM (
@@ -12,7 +13,8 @@ CREATE TYPE public.app_permission AS ENUM (
     'tokens.select',
     'tokens.update',
     'tokens.delete',
-    'profiles.select',
+    'profiles.select.company',
+    'profiles.update.company'
     'user_tokens.select.company',
     'user_tokens.update.company',
     'user_tokens.delete.company',
@@ -99,3 +101,16 @@ CREATE INDEX idx_user_tokens_token_id ON user_tokens(token_id);
 
 -- Indexes for the users table
 CREATE INDEX idx_users_company_id ON profiles(company_id);
+
+
+CREATE TABLE contacts (
+    id SERIAL PRIMARY KEY,
+    display_name TEXT NOT NULL CHECK (char_length(display_name) <= 128),
+    email TEXT NOT NULL CHECK (char_length(email) <= 128),
+    company_id UUID REFERENCES companies(id) ON DELETE CASCADE, -- Add ON DELETE CASCADE
+    -- Adding a composite unique constraint for email and company_id
+    CONSTRAINT unique_contacts_email_company UNIQUE (email, company_id)
+);
+
+CREATE INDEX idx_contacts_company_id ON contacts(company_id);
+

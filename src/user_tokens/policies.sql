@@ -6,8 +6,15 @@ ON public.user_tokens
 FOR SELECT
 USING (
   -- Check if the user is authorized for 'users.select'
-  (SELECT authorize('user_tokens.select.company') AND
-  (auth.jwt() ->> 'company_id')::UUID = (SELECT company_id FROM tokens WHERE tokens.id = token_id))
+  (
+      (SELECT authorize('user_tokens.select.company') AND
+      (auth.jwt() ->> 'company_id')::UUID = (SELECT company_id FROM tokens WHERE tokens.id = token_id))
+  )
+  OR
+  (
+      (SELECT authorize('user_tokens.select.own') AND
+      (auth.jwt() ->> 'profile_id')::INTEGER = profile_id)
+  )
 );
 
 DROP POLICY IF EXISTS "Allow authorized update access with company id" ON public.user_tokens;
