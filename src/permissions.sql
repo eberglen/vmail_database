@@ -9,3 +9,7 @@ GRANT EXECUTE ON FUNCTION public.get_user_info to authenticated;
 GRANT EXECUTE ON FUNCTION public.update_user to authenticated;
 
 GRANT EXECUTE ON FUNCTION public.get_user_tokens to authenticated;
+
+GRANT EXECUTE ON FUNCTION public.get_contacts to authenticated;
+
+GRANT EXECUTE ON FUNCTION public.fetch_role_options to authenticated;

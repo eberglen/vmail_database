@@ -37,6 +37,7 @@ RETURNS TABLE (
     label TEXT
 )
 LANGUAGE sql
+-- for now, allow security definer here, so  we can access t.name
 SECURITY DEFINER
 AS $$
     SELECT

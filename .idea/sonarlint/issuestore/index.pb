@@ -1,7 +1,5 @@
 
 9
 	readme.md,2\7\275d783e298228506068436512433d343feb52aa
-D
-src/mocks/insert.sql,5\3\53ee4e2deb67bf00425a56ed279cbf4c8f8b8be1
 =
 src/notes.txt,1\8\1816a902f227c9f0ce049385aa4760625b201143
