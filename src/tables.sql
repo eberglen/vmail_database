@@ -114,3 +114,43 @@ CREATE TABLE contacts (
 
 CREATE INDEX idx_contacts_company_id ON contacts(company_id);
 
+
+CREATE TABLE sales_orders (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), -- Unique identifier for each sales order
+    name TEXT, -- Name associated with the sales order (nullable)
+    order_number TEXT, -- Order number (nullable, not unique)
+    status TEXT, -- Order status (nullable, no constraint)
+    total_amount DECIMAL(10, 2) CHECK (total_amount >= 0), -- Total order amount
+    company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
+    order_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- Date and time when the order was placed
+    notes TEXT, -- Optional field for additional details or notes
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- Timestamp for record creation
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() -- Timestamp for the last update
+);
+CREATE INDEX idx_sales_orders_company_id ON sales_orders(company_id);
+
+
+-- Create the enum type for sales_thread type
+CREATE TYPE sales_thread_type AS ENUM ('customer', 'supplier');
+
+-- Create the sales_thread table with the type column using the enum and added subject
+CREATE TABLE sales_threads (
+    id SERIAL PRIMARY KEY, -- Serial identifier for each sales thread
+    sales_order_id UUID NOT NULL REFERENCES sales_orders(id) ON DELETE CASCADE, -- Foreign key referencing sales_orders with ON DELETE CASCADE
+    thread_id TEXT NOT NULL, -- Unique identifier for the thread
+    token_id UUID NOT NULL REFERENCES tokens(id) ON DELETE CASCADE, -- Foreign key referencing tokens table with ON DELETE CASCADE
+    type sales_thread_type NOT NULL, -- Enum for type (customer or supplier)
+    subject TEXT, -- Subject of the sales thread
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() -- Timestamp for when the thread record was created
+);
+
+
+-- Index on sales_order_id to speed up lookups by sales order
+CREATE INDEX idx_sales_threads_sales_order_id ON sales_threads(sales_order_id);
+
+-- Index on thread_id to optimize searches on the thread field
+CREATE INDEX idx_sales_threads_thread_id ON sales_threads(thread_id);
+
+-- Index on token_id for faster lookups when querying by token
+CREATE INDEX idx_sales_threads_token_id ON sales_threads(token_id);
+

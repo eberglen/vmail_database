@@ -13,3 +13,5 @@ GRANT EXECUTE ON FUNCTION public.get_user_tokens to authenticated;
 GRANT EXECUTE ON FUNCTION public.get_contacts to authenticated;
 
 GRANT EXECUTE ON FUNCTION public.fetch_role_options to authenticated;
+
+GRANT EXECUTE ON FUNCTION public.insert_sales_order_and_threads to authenticated;
