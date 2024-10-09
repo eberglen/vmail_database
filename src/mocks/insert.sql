@@ -73,3 +73,26 @@ INSERT INTO contacts (display_name, email, company_id) VALUES
 ('Xena Warrior', 'xena.warrior@example.com', '58f6f636-3273-4383-b63d-2ce46cab3722'),
 ('Yoda Jedi', 'yoda.jedi@example.com', '58f6f636-3273-4383-b63d-2ce46cab3722'),
 ('Zelda Fitzgerald', 'zelda.fitzgerald@example.com', '58f6f636-3273-4383-b63d-2ce46cab3722');
+
+
+INSERT INTO sales_orders (name, order_number, status, total_amount, company_id, order_date, notes, created_at, updated_at) VALUES
+('John Doe', 'ORD001', 'Pending', 150.00, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-01 10:30:00+00', 'Initial order placed by John.', NOW(), NOW()),
+('Jane Smith', 'ORD002', 'Completed', 250.00, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-02 11:00:00+00', 'Order completed successfully.', NOW(), NOW()),
+('Acme Corp', 'ORD003', 'Cancelled', 300.00, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-03 12:45:00+00', 'Order cancelled by the client.', NOW(), NOW()),
+('Global Industries', 'ORD004', 'Pending', 120.50, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-04 13:20:00+00', 'Waiting for confirmation.', NOW(), NOW()),
+('Tech Solutions', 'ORD005', 'Shipped', 175.75, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-05 14:15:00+00', 'Order has been shipped.', NOW(), NOW()),
+('Widgets Inc', 'ORD006', 'In Progress', 450.00, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-06 15:30:00+00', 'Order is being processed.', NOW(), NOW()),
+('XYZ Corp', 'ORD007', 'Completed', 600.25, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-07 09:00:00+00', 'Finalized and completed.', NOW(), NOW()),
+('Alpha Tech', 'ORD008', 'Pending', 99.99, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-08 10:00:00+00', 'Pending approval.', NOW(), NOW()),
+('Beta Corp', 'ORD009', 'Cancelled', 80.50, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-09 10:30:00+00', 'Client requested cancellation.', NOW(), NOW()),
+('Gamma Solutions', 'ORD010', 'Shipped', 225.00, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-10 11:00:00+00', 'Order shipped on schedule.', NOW(), NOW()),
+('Delta Widgets', 'ORD011', 'In Progress', 310.00, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-11 12:00:00+00', 'Currently in processing stage.', NOW(), NOW()),
+('Epsilon Tech', 'ORD012', 'Completed', 470.75, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-12 13:30:00+00', 'Successfully completed.', NOW(), NOW()),
+('Zeta Corp', 'ORD013', 'Pending', 320.50, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-13 14:45:00+00', 'Waiting for payment confirmation.', NOW(), NOW()),
+('Eta Solutions', 'ORD014', 'Shipped', 199.99, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-14 09:30:00+00', 'Order has been shipped.', NOW(), NOW()),
+('Theta Widgets', 'ORD015', 'In Progress', 135.00, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-15 11:15:00+00', 'Processing order.', NOW(), NOW()),
+('Iota Tech', 'ORD016', 'Completed', 800.00, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-16 10:00:00+00', 'Completed with excellent feedback.', NOW(), NOW()),
+('Kappa Corp', 'ORD017', 'Pending', 215.50, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-17 10:45:00+00', 'Pending client confirmation.', NOW(), NOW()),
+('Lambda Solutions', 'ORD018', 'Cancelled', 150.25, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-18 12:00:00+00', 'Order cancelled by the client.', NOW(), NOW()),
+('Mu Widgets', 'ORD019', 'Completed', 500.00, '58f6f636-3273-4383-b63d-2ce46cab3722', '2024-09-19 13:15:00+00', 'Successfully completed the order.', NOW(), NOW()),
+('Nu Tech', 'ORD020', 'In Progress', 360.75, '442aeb7d-5580-4b19-87bf-d470c9921cdd', '2024-09-20 14:30:00+00', 'Order is currently in progress.', NOW(), NOW());

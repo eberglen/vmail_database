@@ -116,7 +116,7 @@ CREATE INDEX idx_contacts_company_id ON contacts(company_id);
 
 
 CREATE TABLE sales_orders (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), -- Unique identifier for each sales order
+    id SERIAL PRIMARY KEY, -- Unique identifier for each sales order
     name TEXT, -- Name associated with the sales order (nullable)
     order_number TEXT, -- Order number (nullable, not unique)
     status TEXT, -- Order status (nullable, no constraint)
@@ -124,6 +124,7 @@ CREATE TABLE sales_orders (
     company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
     order_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- Date and time when the order was placed
     notes TEXT, -- Optional field for additional details or notes
+    assigned_to INTEGER REFERENCES profiles(id) ON DELETE SET NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- Timestamp for record creation
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() -- Timestamp for the last update
 );
@@ -136,7 +137,7 @@ CREATE TYPE sales_thread_type AS ENUM ('customer', 'supplier');
 -- Create the sales_thread table with the type column using the enum and added subject
 CREATE TABLE sales_threads (
     id SERIAL PRIMARY KEY, -- Serial identifier for each sales thread
-    sales_order_id UUID NOT NULL REFERENCES sales_orders(id) ON DELETE CASCADE, -- Foreign key referencing sales_orders with ON DELETE CASCADE
+    sales_order_id INTEGER NOT NULL REFERENCES sales_orders(id) ON DELETE CASCADE, -- Foreign key referencing sales_orders with ON DELETE CASCADE
     thread_id TEXT NOT NULL, -- Unique identifier for the thread
     token_id UUID NOT NULL REFERENCES tokens(id) ON DELETE CASCADE, -- Foreign key referencing tokens table with ON DELETE CASCADE
     type sales_thread_type NOT NULL, -- Enum for type (customer or supplier)

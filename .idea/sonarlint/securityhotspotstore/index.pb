@@ -31,5 +31,3 @@ G
 src/tokens/policies.sql,4\9\4928c2022dc3f4f8b16f823095c58e081cdd282d
 G
 src/profiles/insert.sql,7\d\7da5c253d83d6b0c1c32eb0120e95f4b4fbab53b
-D
-src/mocks/insert.sql,5\3\53ee4e2deb67bf00425a56ed279cbf4c8f8b8be1
