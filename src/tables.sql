@@ -122,7 +122,7 @@ CREATE TABLE sales_orders (
     status TEXT, -- Order status (nullable, no constraint)
     total_amount DECIMAL(10, 2) CHECK (total_amount >= 0), -- Total order amount
     company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
-    order_date TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- Date and time when the order was placed
+    order_date DATE DEFAULT NOW(), -- Date and time when the order was placed
     notes TEXT, -- Optional field for additional details or notes
     assigned_to INTEGER REFERENCES profiles(id) ON DELETE SET NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- Timestamp for record creation

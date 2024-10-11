@@ -16,4 +16,9 @@ GRANT EXECUTE ON FUNCTION public.fetch_role_options to authenticated;
 
 GRANT EXECUTE ON FUNCTION public.insert_sales_order_and_threads to authenticated;
 
+GRANT EXECUTE ON FUNCTION public.get_sales_orders to authenticated;
+
 GRANT EXECUTE ON FUNCTION public.update_sales_order to authenticated;
+
+GRANT EXECUTE ON FUNCTION public.delete_sales_order to authenticated;
+
