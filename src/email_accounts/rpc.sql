@@ -32,7 +32,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
+-- TODO: merge this with get_user_tokens
 CREATE OR REPLACE FUNCTION get_email_accounts()
 RETURNS TABLE (
     id UUID,
@@ -48,13 +48,24 @@ AS $$
         t.email
     FROM
         tokens t
+    LEFT JOIN
+        user_tokens ut ON ut.token_id = t.id
     WHERE
         -- If the user is authorized for selecting by company, show all tokens in the same company
         (
             (SELECT authorize('tokens.select.company'))
             AND (auth.jwt() ->> 'company_id')::UUID = t.company_id
         )
-    ORDER BY t.created_at DESC; -- Include all selected columns in GROUP BY
+        OR
+        -- If the user is not an admin, show only their own user data
+        (
+            (SELECT authorize('tokens.select.own'))
+            AND (auth.jwt() ->> 'profile_id')::INTEGER = ut.profile_id
+        )
+
+    GROUP BY t.id
+
+    ORDER BY t.created_at DESC;
 $$;
 
 CREATE OR REPLACE FUNCTION update_email_account_name(
