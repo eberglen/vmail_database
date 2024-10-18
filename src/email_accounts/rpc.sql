@@ -32,7 +32,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- TODO: merge this with get_user_tokens
 CREATE OR REPLACE FUNCTION get_email_accounts()
 RETURNS TABLE (
     id UUID,
@@ -45,7 +44,10 @@ AS $$
     SELECT
         t.id,
         t.name,
-        t.email
+        CASE
+            WHEN (SELECT authorize('tokens.column.email')) THEN t.email
+            ELSE encrypt_message(t.email)
+        END AS email
     FROM
         tokens t
     LEFT JOIN

@@ -13,7 +13,7 @@ AS $$
         c.display_name as label,
         CASE
             WHEN (SELECT authorize('contacts.column.email')) THEN c.email
-            ELSE encrypt_message(c.email, 'your_secret_key')
+            ELSE encrypt_message(c.email)
         END AS value
     FROM
         contacts c
